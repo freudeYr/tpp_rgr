@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Головна сторінка</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        /* Шапка */
+        .header {
+            background-color: #4c96af;
+            color: white;
+            padding: 15px;
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        /* Контейнер */
+        .container {
+            width: 80%;
+            margin: 20px auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h2, h3 {
+            color: #333;
+            text-align: center;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            background: #fff;
+        }
+
+        table, th, td {
+            border: 1px solid #ccc;
+        }
+
+        th {
+            background-color: #4c96af;
+            color: white;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+
+        /* Навігаційне меню */
+        .nav-links {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .nav-links a {
+            display: inline-block;
+            padding: 10px 15px;
+            margin: 5px;
+            background: #4c96af;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+
+        .nav-links a:hover {
+            background: #4c68af;
+        }
+
+        /* Повідомлення для користувачів */
+        .info-box {
+            text-align: center;
+            padding: 15px;
+            background: #ffcccb;
+            border-radius: 5px;
+            color: #333;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">Варіант №9</div>
+
+    <div class="container">
+
+        <h2>Інформація про Міста, Вулиці, Будинки та Квартири</h2>
+
+        <!-- Виведення таблиці для міст -->
+        <h3>Міста</h3>
+        <table>
+            <tr><th>ID</th><th>Назва</th></tr>
+            <tr th:each="city : ${cities}">
+                <td th:text="${city.cityId}"></td>
+                <td th:text="${city.cityName}"></td>
+            </tr>
+        </table>
+
+        <!-- Виведення таблиці для вулиць -->
+        <h3>Вулиці</h3>
+        <table>
+            <tr><th>ID</th><th>Назва</th></tr>
+            <tr th:each="street : ${streets}">
+                <td th:text="${street.streetId}"></td>
+                <td th:text="${street.streetName}"></td>
+            </tr>
+        </table>
+
+        <!-- Виведення таблиці для будинків -->
+        <h3>Будинки</h3>
+        <table>
+            <tr><th>ID</th><th>Номер</th></tr>
+            <tr th:each="house : ${houses}">
+                <td th:text="${house.houseId}"></td>
+                <td th:text="${house.houseNumber}"></td>
+            </tr>
+        </table>
+
+        <!-- Виведення таблиці для квартир -->
+        <h3>Квартири</h3>
+        <table>
+            <tr><th>ID</th><th>Номер</th></tr>
+            <tr th:each="apartment : ${apartments}">
+                <td th:text="${apartment.apartmentId}"></td>
+                <td th:text="${apartment.apartmentNumber}"></td>
+            </tr>
+        </table>
+
+        <!-- Повідомлення для користувачів -->
+        <div th:if="${isUser}" class="info-box">
+            У вас немає доступу до редагування та видалення. Ці функції доступні лише адміністраторам.
+        </div>
+
+        <!-- Посилання на CRUD для кожної таблиці (тільки для Admin) -->
+        <div class="nav-links" th:if="${not isUser}">
+            <a th:href="@{/city}">Міста</a>
+            <a th:href="@{/street}">Вулиці</a>
+            <a th:href="@{/house}">Будинки</a>
+            <a th:href="@{/apartment}">Квартири</a>
+        </div>
+
+    </div>
+
+</body>
+</html>

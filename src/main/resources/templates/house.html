@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Будинки</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f7fc;
+        }
+
+        h2 {
+            color: #333;
+            text-align: center;
+        }
+
+        table {
+            width: 50%;
+            margin: 0 auto;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            background-color: white;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: center;
+            border: 1px solid #ccc;
+        }
+
+        th {
+            background-color: #4c96af;
+            color: white;
+        }
+
+        td {
+            background-color: #f9f9f9;
+        }
+
+        .action-btn {
+            display: inline-block;
+            padding: 6px 12px;
+            background-color: #ff4747;
+            color: white;
+            text-align: center;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .action-btn:hover {
+            background-color: #e53935;
+        }
+
+        .form-container {
+            margin-top: 20px;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .form-container input {
+            padding: 10px;
+            width: 100%;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+        .form-container button {
+            width: 100%;
+            padding: 10px;
+            background-color: #4c96af;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .form-container button:hover {
+            background-color: #4c68af;
+        }
+
+        .action-btn-container {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Будинки</h2>
+
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Вулиця (ID)</th>
+                <th>Номер будинку</th>
+                <th>Дії</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="house : ${houses}">
+                <td th:text="${house.houseId}"></td>
+                <td th:text="${house.streetId}"></td>
+                <td th:text="${house.houseNumber}"></td>
+                <td class="action-btn-container">
+                    <!-- Форма для видалення -->
+                    <form th:action="@{/house/delete}" method="post" style="display:inline;">
+                        <input type="hidden" name="id" th:value="${house.houseId}" />
+                        <button type="submit" class="action-btn">Видалити</button>
+                    </form>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="form-container">
+        <h3>Додати новий будинок</h3>
+        <form th:action="@{/house/add}" method="post">
+            <input type="text" name="houseNumber" placeholder="Номер будинку" required />
+            <input type="number" name="streetId" placeholder="ID вулиці" required />
+            <button type="submit">Додати</button>
+        </form>
+    </div>
+
+    <div class="form-container">
+        <h3>Редагувати будинок</h3>
+        <form th:action="@{/house/update}" method="post">
+            <input type="number" name="id" placeholder="ID будинку" required />
+            <input type="text" name="houseNumber" placeholder="Новий номер будинку" required />
+            <button type="submit">Оновити</button>
+        </form>
+    </div>
+
+</body>
+</html>
